@@ -413,6 +413,7 @@ public class HCALlevelTwoEventHandler extends HCALEventHandler {
       // also halt all LPM applications inside here
       initXDAQ();
 
+      for (QualifiedResource qr : functionManager.containerhcalSupervisor.getApplications() ){
         try {
           XDAQParameter pam = null;
           pam =((XdaqApplication)qr).getXDAQParameter();
@@ -423,10 +424,15 @@ public class HCALlevelTwoEventHandler extends HCALEventHandler {
 
           pam.send();
         }
-        catch (XDAQTimeoutException | XDAQException e) {
-          String errMessage = "[HCAL " + functionManager.FMname + "] Error! Caught an exception when trying to set ReportStateToRCMS after initXDAQ(): " + e.getMessage;
+        catch (XDAQTimeoutException e) {
+          String errMessage = "[HCAL " + functionManager.FMname + "] Error! Caught an XDAQTimeoutException when trying to set ReportStateToRCMS after initXDAQ(): " + e.getMessage();
           functionManager.goToError(errMessage);
         }
+        catch (XDAQException e) {
+          String errMessage = "[HCAL " + functionManager.FMname + "] Error! Caught an XDAQException when trying to set ReportStateToRCMS after initXDAQ(): " + e.getMessage();
+          functionManager.goToError(errMessage);
+        }
+      }
 
       // go to Halted
       if (!functionManager.ErrorState) {
