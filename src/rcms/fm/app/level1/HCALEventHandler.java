@@ -1451,7 +1451,8 @@ public class HCALEventHandler extends UserEventHandler {
           //FIXME SIC set this ourselves!
           dowehaveanasynchcalSupervisor = pam.getValue("ReportStateToRCMS");
 
-          logger.debug("[HCAL " + functionManager.FMname + "] asking for the HCAL supervisor ReportStateToRCMS results in: " + dowehaveanasynchcalSupervisor);
+          logger.info("[HCAL " + functionManager.FMname + "] asking for the HCAL supervisor ReportStateToRCMS results in: " + dowehaveanasynchcalSupervisor);
+          logger.info("[JohnLogAsync]: This should be reset later..."); 
 
         }
         catch (XDAQTimeoutException e) {
