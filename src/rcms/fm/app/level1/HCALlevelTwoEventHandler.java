@@ -413,6 +413,21 @@ public class HCALlevelTwoEventHandler extends HCALEventHandler {
       // also halt all LPM applications inside here
       initXDAQ();
 
+        try {
+          XDAQParameter pam = null;
+          pam =((XdaqApplication)qr).getXDAQParameter();
+
+          pam.select(new String[] {"ReportStateToRCMS"});
+          pam.setValue("ReportStateToRCMS", "true");
+          logger.info("[HCAL " + functionManager.FMname + "] Set ReportStateToRCMS to: true.");
+
+          pam.send();
+        }
+        catch (XDAQTimeoutException | XDAQException e) {
+          String errMessage = "[HCAL " + functionManager.FMname + "] Error! Caught an exception when trying to set ReportStateToRCMS after initXDAQ(): " + e.getMessage;
+          functionManager.goToError(errMessage);
+        }
+
       // go to Halted
       if (!functionManager.ErrorState) {
         functionManager.fireEvent( HCALInputs.SETHALT );
@@ -875,12 +890,12 @@ public class HCALlevelTwoEventHandler extends HCALEventHandler {
           XDAQParameter pam = null;
           pam =((XdaqApplication)qr).getXDAQParameter();
 
-          pam.select(new String[] {"IsLocalRun", "TriggerKey", "ReportStateToRCMS"});
+          pam.select(new String[] {"IsLocalRun", "TriggerKey"});
           pam.setValue("IsLocalRun", String.valueOf(RunType.equals("local")));
           logger.info("[HCAL " + functionManager.FMname + "] Set IsLocalRun to: " + String.valueOf(RunType.equals("local")));
           pam.setValue("TriggerKey", TpgKey);
-          pam.setValue("ReportStateToRCMS", "true");
-          logger.info("[HCAL " + functionManager.FMname + "] Set ReportStateToRCMS to: true.");
+          //pam.setValue("ReportStateToRCMS", "true");
+          //logger.info("[HCAL " + functionManager.FMname + "] Set ReportStateToRCMS to: true.");
 
           pam.send();
         }
