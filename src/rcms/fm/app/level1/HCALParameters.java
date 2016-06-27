@@ -317,6 +317,7 @@ public class HCALParameters extends ParameterSet<FunctionManagerParameter> {
 		this.put(new FunctionManagerParameter<BooleanT>(USE_PRIMARY_TCDS, new BooleanT("true"),FunctionManagerParameter.Exported.READONLY));
 	}
 
+  @SuppressWarnings("unchecked")
 	public synchronized HCALParameters getClonedParameterSet() { 
     HCALParameters cloned = new HCALParameters();
 		for (Map.Entry<String, FunctionManagerParameter> pair : this.getMap().entrySet()) {
@@ -326,6 +327,7 @@ public class HCALParameters extends ParameterSet<FunctionManagerParameter> {
 		}
 	  return cloned;
 	}
+  @SuppressWarnings("unchecked")
 	public synchronized ParameterSet<FunctionManagerParameter> getChanged( ParameterSet<FunctionManagerParameter> earlier) {
 		ParameterSet<FunctionManagerParameter> changed = new ParameterSet<FunctionManagerParameter>();
 		for (Map.Entry<String, FunctionManagerParameter> pair : this.getMap().entrySet()) {

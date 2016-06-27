@@ -300,6 +300,7 @@ public class HCALStateNotificationHandler extends UserEventHandler  {
     /*--------------------------------------------------------------------------------
      *
      */
+    @SuppressWarnings("unchecked")
     protected void executeTaskSequence( TaskSequence taskSequence ) {
  
         this.taskSequence = taskSequence;
@@ -322,8 +323,7 @@ public class HCALStateNotificationHandler extends UserEventHandler  {
             //logger.warn("started execution of taskSequence");
             setTimeoutThread(true);
             try {
-                fm.getParameterSet().get(HCALParameters.ACTION_MSG)
-                    .setValue(new StringT(""+taskSequence.getDescription()));
+                fm.getParameterSet().get(HCALParameters.ACTION_MSG).setValue(new StringT(""+taskSequence.getDescription()));
  
             } catch (Exception e) {
                 logger.warn("failed to set action parameter");
