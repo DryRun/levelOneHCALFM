@@ -233,6 +233,12 @@ public class HCALlevelTwoEventHandler extends HCALEventHandler {
                 pam.send();
                 logger.info("[HCAL LVL2 " + functionManager.FMname + "]: Just set the HandleLPM for " + qr.getName() + " to true");
               }
+              if (pamName.equals("ReportStateToRCMS")) {
+                pam.select(new String[] {"ReportStateToRCMS"});
+                pam.setValue("ReportStateToRCMS", "true");
+                pam.send();
+                logger.info("[HCAL LVL2 " + functionManager.FMname + "]: Just set the ReportStateToRCMS for " + qr.getName() + " to true");
+              }
 							////XXX SIC TODO FIXME WHY DOES THIS CRASH?
 							//if (pamName.equals("usePrimaryTCDS")) {
 							//  logger.info("[HCAL LVL2 " + functionManager.FMname + "]: Found an xdaqparameter named ReportStateToRCMS (actually usePrimaryTCDS); try to set ReportStateToRCMS (actually usePrimaryTCDS) for " + qr.getName() + " to true");
